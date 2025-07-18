@@ -35,14 +35,20 @@ if "first_submit" not in st.session_state:
 
 with st.form("Search Query"):
     user_prompt = st.text_input("Enter your request for types of members in the network")
-    if st.form_submit_button("Submit"):
+    submitted1 = st.form_submit_button("Submit")
+    if submitted1:
         st.toast(f"User Input Submitted - {user_prompt}")
+        for key in default_data:
+            st.session_state[key] = ''
         # Simulate calling a function
         response = first.categorize_user_query(user_prompt)
         st.write(response)
-        for key, value in response.items():
-            st.session_state[key] = ", ".join(value) if isinstance(value, list) else value
-        st.session_state.first_submit = True
+        if len(response) == 0:
+            st.error("No categories found in the request. Please provide more details in your query.")
+        else:
+            for key, value in response.items():
+                st.session_state[key] = ", ".join(value) if isinstance(value, list) else value
+            st.session_state.first_submit = True
 
 
 if st.session_state.first_submit:
@@ -55,21 +61,41 @@ if st.session_state.first_submit:
         for key in default_data:
             st.session_state[key] = st.text_input(key, value=st.session_state[key])
 
+        submitted2 = st.form_submit_button("Submit")
+        st.session_state['query'] = False  # Reset query state for new search
         # st.json({k: st.session_state[k] for k in default_data})
-        if st.form_submit_button("Submit Refinement"):
+        if submitted2:
+            if all(not st.session_state.get(k) for k in default_data):
+                st.error("No inputs found in any categoriy. Please provide more details in your categories.")
+                st.stop()
+                
             st.divider()
             with st.spinner("Searching... Please wait."):
                 if st.session_state["Profile"]: 
                     profile = cat.filter_by_profile(st.session_state["Profile"])
+                    if len(profile) != 0:
+                        st.session_state['query'] = True
                 if st.session_state["Nationality"]: 
                     nationality = cat.filter_by_nationality(st.session_state["Nationality"])
+                    if len(nationality) != 0:
+                        st.session_state['query'] = True
                 if st.session_state["Location"]: 
                     location = cat.filter_by_location(st.session_state["Location"])
+                    if len(location) != 0:
+                        st.session_state['query'] = True
                 if st.session_state["Occupation"]: 
                     occupation = cat.filter_by_occupation(st.session_state["Occupation"])
+                    if len(occupation) != 0:
+                        st.session_state['query'] = True
                 if st.session_state["Education"]: 
                     education = cat.filter_by_education(st.session_state["Education"])
+                    if len(education) != 0:
+                        st.session_state['query'] = True
             
+            if not st.session_state['query']:
+                st.error("No filters found in the request. Please refine your query.")
+                st.stop()
+
             st.subheader("Search Query Results")
 
             if st.session_state["Profile"]: 

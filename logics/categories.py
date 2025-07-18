@@ -119,7 +119,7 @@ def filter_by_occupation(query):
     - 'Industry': list of industry is {metadata['Industry']}. only suggest is there are specific job levels requested.
     - 'Sector': list of sector is {metadata['Sector']}, only applicable for banking and finance industry.
     - 'Job Function': list of job function is {metadata['Job Function']}. can also suggest some keywords to search using not in the list in a separate category.
-    - 'Area of Specialization': list of area of specialization is {metadata['Area of Specialization']}. can also suggest some keywords to search using not in the list in a separate category.
+    - 'Area of Specialization': list of area of specialization is {metadata['Area of Specialization']}. only applicable when Job Function is Technology. can also suggest some keywords to search using not in the list in a separate category.
     - 'Job Level': list of job level is {metadata['Job Level']}. only suggest is there are specific job levels requested.
     - 'Job Title': free text, suggest key words of titles that are relevant to the request.
 
