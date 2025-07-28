@@ -54,7 +54,7 @@
         "EVP / SVP / VP / Director / Lead Specialist",
         "Manager / Senior Specialist",
         "Associate / Executive / Junior Specialist"],
-    "Type": ["Student", "Working Professional", "Business Owner and Entrepreneur"],
+    "Occupation": ["Student", "Working Professional", "Business Owner and Entrepreneur"],
     "Course of Study": ["Generic Programmes and Qualifications",
             "Architecture, Building and Real Estate",
             "Business and Administration",
@@ -274,8 +274,5 @@
             "Vietnamese",
             "Yemeni",
             "Zambian",
-            "Zimbabwean"],
-    "Country": [],
-    "State": [],
-    "City": []
+            "Zimbabwean"]
 }
